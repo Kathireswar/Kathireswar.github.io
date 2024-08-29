@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kathir Eswar's Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        html {
+    scroll-behavior: smooth;
+}
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000; /* Ensure it's on top of everything */
+        }
+        .loading-screen p {
+            font-size: 1.5rem;
+            color: #333;
+        }
+        header {
+            position: relative;
+            color: #ffefc6; /* Light text color for better contrast with the video */
+            text-align: center;
+            padding: 15rem 0;
+            overflow: hidden; /* Ensure content does not overflow */
+        }
+        header video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1; /* Place the video behind other content */
+        }
+        .header-content {
+            position: relative;
+            z-index: 1; /* Ensure the content is on top of the video */
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        header p {
+            margin: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(20, 2, 85, 0.452); /* Semi-transparent background */
+            color: #fff;
+            padding: 0.5rem 0;
+            text-align: center;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            backdrop-filter: blur(10px); /* Blur effect */
+            -webkit-backdrop-filter: blur(10px); /* For Safari */
+        }
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            display: inline-block;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        nav a.active, nav a:hover {
+            background: rgba(20, 2, 85, 0.7); /* Darker background on hover */
+            border-radius: 5px;
+            color: #fff;
+        }
+        section {
+            padding: 2rem;
+            margin: 2rem auto;
+            max-width: 800px;
+            background: linear-gradient(to right, #ffffff, #f8f9fa); /* Gradient background */
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+        }
+        section:hover {
+            transform: scale(1.03);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            background: linear-gradient(to right, #f8f9fa, #e9ecef); /* Change background on hover */
+        }
+        h2 {
+            border-bottom: 2px solid #333;
+            padding-bottom: 0.5rem;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+        ul li {
+            margin: 0.5rem 0;
+        }
+        a {
+            color: #333;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        footer {
+            background: #333;
+            color: #fff;
+            padding: 0.01rem 0;
+            text-align: center;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+        /* footer:hover {
+            background: #555; 
+            color: #fffffc; 
+        } */
+        .button {
+            background-color: #007bff; /* Primary color */
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 1rem;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3; /* Darker shade on hover */
+            transform: scale(1.05);
+        }
+        .social-icons {
+            margin: 1rem 0;
+            padding: 0;
+            list-style: none;
+            display: flex;
+            justify-content: center;
+        }
+        .social-icons li {
+            margin: 0 0.5rem;
+        }
+        .social-icons a {
+            display: block;
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 50%;
+            color: #fff;
+            text-align: center;
+            line-height: 40px;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: background-color 0.3s ease;
+        }
+        .social-icons a:hover {
+            background-color: #555;
+        } 
+
+
+            @media only screen and (max-width: 768px) {
+        header {
+            padding: 10rem 0; /* Adjust header padding */
+        }
+        header h1 {
+            font-size: 2rem; /* Adjust font size */
+        }
+        header p {
+            font-size: 1rem; /* Adjust font size */
+        }
+        nav a {
+            padding: 0.5rem 0.5rem;
+            font-size: 0.9rem; /* Adjust font size */
+        }
+        section {
+            padding: 1rem;
+            margin: 1rem auto;
+        }
+        .button {
+            padding: 0.5rem 0.8rem; /* Adjust button padding */
+        }
+    }
+
+        /* Desktop Styles */
+        @media only screen and (min-width: 769px) {
+            nav {
+                padding: 1rem 0; /* Adjust padding for desktop */
+            }
+            section {
+                padding: 2rem;
+                margin: 2rem auto;
+            }
+            .button {
+                padding: 0.5rem 1rem; /* Default padding for desktop */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="loading-screen" id="loading-screen">
+        <p>Loading...</p>
+    </div>
+
+    <nav>
+        <a href="#about">About</a>
+        <a href="#education">Education</a>
+        <a href="#experience">Experience</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#portfolio-projects">Portfolio Projects</a>
+        <a href="#resume">Resume</a>
+        <a href="#contact">Contact</a>
+        
+    </nav>
+    
+    <header>
+        <video autoplay muted loop id="background-video">
+            <source src="assets/imgs/39f39bc0.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="header-content">
+            <h1>Kathir Eswar</h1>
+            <p>Client Interaction Lead at Ogrelix | Computer Science Student</p>
+        </div>
+    </header>
+    
+    <section id="about" data-aos="fade-up">
+        <h2>About Me</h2>
+        <p>I am a passionate and dedicated Computer Science student at Panimalar College, Chennai, with a strong interest in software development and ERP systems. With experience in Laravel PHP, Python, MySQL, and a background in data structures and algorithms, I am enthusiastic about leveraging technology to solve real-world problems and contribute to innovative projects.</p>
+    </section>
+    
+    <section id="education" data-aos="fade-up">
+        <h2>Education</h2>
+        <ul>
+            <li>BE in Computer Science and Engineering, Panimalar Engineering College, Chennai (2022-2026)</li>
+            <li>HSC, Sri Bharathidasan Matric and Higher Sec School (April 2022)</li>
+            <li>SSLC, Ashoka Sishu Vihar Matriculation School (April 2020)</li>
+        </ul>
+    </section>
+    
+    <section id="experience" data-aos="fade-up">
+        <h2>Experience</h2>
+        <h3>Client Interaction Lead</h3>
+        <p><strong>Ogrelix</strong><br>
+        <em>August 2024 – Present</em></p>
+        <ul>
+            <li>Leading client interactions and managing project requirements for an ERP product.</li>
+            <li>Coordinating with clients to understand their needs and ensure product alignment.</li>
+        </ul>
+    </section>
+    
+    <section id="projects" data-aos="fade-up">
+        <h2>Projects</h2>
+        <h3>Institute Management System (IMS)</h3>
+        <p><strong>Description:</strong> Developed an Institute Management System to automate various administrative tasks including attendance tracking, fee management, timetable scheduling, and online record access.</p>
+        <p><strong>Technologies:</strong> Laravel PHP, MySQL, JavaScript</p>
+        <p><strong>Key Features:</strong> Activity logging, web scraping integration, assignment submission management</p>
+        
+        <h3>ERP Product Development</h3>
+        <p><strong>Description:</strong> Contributed to the development and enhancement of an ERP product at Ogrelix.</p>
+        <p><strong>Technologies:</strong> Laravel PHP, Python, MySQL</p>
+        <p><strong>Key Features:</strong> Client requirement management, feature implementation</p>
+    </section>
+    
+    <section id="skills" data-aos="fade-up">
+        <h2>Skills</h2>
+        <ul>
+            <li>Programming Languages: Python, JavaScript, C</li>
+            <li>Frameworks & Tools: Laravel PHP, MySQL, Git</li>
+            <li>Operating Systems: Debian, Linux</li>
+            <li>Soft Skills: Problem-solving, client interaction, project management</li>
+        </ul>
+    </section>
+    
+    <section id="portfolio-projects" data-aos="fade-up">
+        <h2>Portfolio Projects</h2>
+        <ul>
+            <li><a href="#">Project 1</a></li>
+            <li><a href="#">Project 2</a></li>
+            <li><a href="#">Project 3</a></li>
+        </ul>
+    </section>
+    <section id="resume" data-aos="fade-up" >
+        <h2>Resume</h2>
+        <p>You can download my resume from the link below:</p>
+        <a href="assets/files/kathireswar.resume.pdf" class="button" download>Download Resume</a>
+    </section>
+    
+    
+    <section id="contact" data-aos="fade-up">
+        <h2>Contact</h2>
+        <p>Email: <a href="mailto:kathireswarofficial@gmail.com">kathireswarofficial@gmail.com</a></p>
+        <p>Phone: <a href="tel:+916369720106">+91 6369720106</a></p>
+        <ul class="social-icons">
+            <li><a href="https://www.linkedin.com/in/kathir-eswar/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a></li>
+            <li><a href="https://github.com/Kathireswar" target="_blank" title="GitHub"><i class="fab fa-github"></i></a></li>
+        </ul>
+    </section>
+    
+    <footer>
+        <p>&copy; 2024 Kathir Eswar. All rights reserved.</p>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000, // Duration of the animations in milliseconds
+            once: true, // Whether animation should happen only once
+        });
+
+        // JavaScript to hide the loading screen after the page has loaded
+        window.addEventListener('load', function() {
+            const loadingScreen = document.getElementById('loading-screen');
+            loadingScreen.style.opacity = 0.5;
+            loadingScreen.style.transition = 'opacity 0.5s ease-out';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 700); // Matches the fade-out duration
+        });
+
+        
+    </script>
+</body>
+</html>
